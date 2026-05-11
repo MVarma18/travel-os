@@ -5,6 +5,7 @@ import ButtonSpinner from "@/app/app/_components/button-spinner";
 import { useFormActionFeedback } from "@/app/app/_components/use-form-action-feedback";
 import type { RefObject } from "react";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import EntityCommentsBlock, {
   type EntityCommentDTO,
@@ -635,7 +636,7 @@ export default function TripExpensesClient({
 
   useEffect(() => {
     if (prefillExpenseAmountInr != null && Number.isFinite(prefillExpenseAmountInr)) {
-      setPrefillDraftInr(prefillExpenseAmountInr);
+      queueMicrotask(() => setPrefillDraftInr(prefillExpenseAmountInr));
     }
   }, [prefillExpenseAmountInr]);
 
@@ -707,6 +708,15 @@ export default function TripExpensesClient({
         <p className="text-sm font-semibold text-indigo-900">Track group costs and settle faster</p>
         <p className="mt-1 text-xs leading-relaxed text-indigo-800">
           Add each expense, split it fairly, and see who owes or gets paid so money conversations stay clear.
+        </p>
+        <p className="mt-3 text-xs leading-relaxed text-indigo-800">
+          <Link
+            href={`/app/trip/${tripId}?tab=connect`}
+            className="font-semibold text-indigo-950 underline decoration-indigo-400/80 underline-offset-2 hover:text-indigo-900"
+          >
+            Open Connect
+          </Link>{" "}
+          to chat, share docs, or check members while you sort out costs.
         </p>
       </section>
 
